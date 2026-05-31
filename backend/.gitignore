@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+env/
+.env
+
+# Local database isolation
+data/
+*.db
+*.db-journal
+*.sqlite

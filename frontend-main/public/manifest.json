@@ -1,0 +1,43 @@
+{
+  "name": "PROFIT — Loyalty Ecosystem",
+  "short_name": "PROFIT",
+  "description": "Один бонус. Багато можливостей. Екосистема лояльності з токенами MD.",
+  "start_url": "/app/home",
+  "display": "standalone",
+  "background_color": "#102820",
+  "theme_color": "#102820",
+  "orientation": "portrait-primary",
+  "categories": ["finance", "shopping", "lifestyle"],
+  "lang": "uk",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Головна",
+      "short_name": "Home",
+      "description": "Відкрити головну сторінку",
+      "url": "/app/home",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Партнери",
+      "short_name": "Partners",
+      "description": "Знайти партнерів",
+      "url": "/app/partners",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}
