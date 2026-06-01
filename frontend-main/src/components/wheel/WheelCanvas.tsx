@@ -104,9 +104,9 @@ export default function WheelCanvas({ onSpin, canSpinFree, paidCost, isLoading }
 
     // Pointer
     ctx.beginPath();
-    ctx.moveTo(cx, cy - r - 2);
-    ctx.lineTo(cx - 10, cy - r + 18);
-    ctx.lineTo(cx + 10, cy - r + 18);
+    ctx.moveTo(cx, cy - r + 15); // Arrow tip pointing down into the segments
+    ctx.lineTo(cx - 12, cy - r - 8); // Top-left corner of the arrow base
+    ctx.lineTo(cx + 12, cy - r - 8); // Top-right corner of the arrow base
     ctx.closePath();
     ctx.fillStyle = "#C9A84C";
     ctx.fill();

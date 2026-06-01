@@ -192,7 +192,7 @@ export default function HomePage() {
         {/* Desktop: 2-col grid */}
         <div style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fit, minmax(270px, 1fr))",
           gap: 16,
           alignItems: "start",
         }}>

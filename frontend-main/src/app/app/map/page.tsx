@@ -14,6 +14,14 @@ export default function MapPage() {
   const [category, setCategory] = useState("Всі");
   const [selected, setSelected] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   useEffect(() => {
     api.get("/partner/list?limit=100")
@@ -27,22 +35,35 @@ export default function MapPage() {
 
   const mapPartners = filtered.filter(p => p.latitude && p.longitude);
 
+  const containerHeight = isMobile ? "calc(100vh - 72px)" : "calc(100vh - 4rem)";
+
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100dvh" }}>
+    <div style={{
+      display: "flex",
+      flexDirection: "column",
+      height: containerHeight,
+      position: "relative",
+      overflow: "hidden",
+      borderRadius: isMobile ? 0 : 20,
+      border: isMobile ? "none" : "1px solid var(--border)",
+      boxShadow: isMobile ? "none" : "var(--shadow-premium)",
+    }}>
       {/* Header overlay on map */}
       <div style={{
         position: "absolute", top: 0, left: 0, right: 0, zIndex: 30,
         padding: "12px 16px",
-        background: "linear-gradient(to bottom, rgba(16,40,32,0.92) 70%, transparent)",
+        background: "linear-gradient(to bottom, var(--bg-secondary) 85%, transparent)",
         backdropFilter: "blur(8px)",
+        borderBottom: "1px solid var(--border)",
+        transition: "all 0.3s",
       }}>
         {/* Only visible on mobile where sidebar isn't shown */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
           <div>
-            <h1 style={{ fontFamily: "var(--font-display)", fontSize: "1.4rem", fontWeight: 700, color: "#F9F5E8", lineHeight: 1 }}>
+            <h1 style={{ fontFamily: "var(--font-display)", fontSize: "1.4rem", fontWeight: 700, color: "var(--text-primary)", lineHeight: 1 }}>
               Карта партнерів
             </h1>
-            <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 12, marginTop: 3 }}>
+            <p style={{ color: "var(--text-secondary)", fontSize: 12, marginTop: 3 }}>
               <MapPin size={11} style={{ display: "inline", marginRight: 3 }} />
               {mapPartners.length} на карті
             </p>
@@ -51,7 +72,7 @@ export default function MapPage() {
             aria-label="Фільтри"
             style={{
               width: 38, height: 38, borderRadius: 12,
-              background: "rgba(201,168,76,0.15)", border: "1px solid rgba(201,168,76,0.3)",
+              background: "rgba(201,168,76,0.1)", border: "1px solid var(--border)",
               display: "flex", alignItems: "center", justifyContent: "center",
               cursor: "pointer", color: "#C9A84C",
             }}
@@ -68,11 +89,12 @@ export default function MapPage() {
               onClick={() => setCategory(cat)}
               style={{
                 flexShrink: 0, padding: "5px 14px", borderRadius: 999,
-                fontSize: 12, fontWeight: 500, border: "none", cursor: "pointer",
+                fontSize: 12, fontWeight: 500, cursor: "pointer",
                 background: category === cat
                   ? "linear-gradient(135deg, #C9A84C, #E8C96C)"
-                  : "rgba(255,255,255,0.08)",
-                color: category === cat ? "#102820" : "rgba(255,255,255,0.7)",
+                  : "var(--bg-card-alt)",
+                color: category === cat ? "#102820" : "var(--text-secondary)",
+                border: category === cat ? "none" : "1px solid var(--border)",
                 boxShadow: category === cat ? "0 2px 10px rgba(201,168,76,0.4)" : "none",
                 transition: "all 0.18s",
               }}
@@ -95,10 +117,10 @@ export default function MapPage() {
       {/* Selected partner bottom sheet */}
       {selected && (
         <div style={{
-          position: "absolute", bottom: 80, left: 16, right: 16, zIndex: 50,
+          position: "absolute", bottom: isMobile ? 16 : 24, left: 16, right: 16, zIndex: 50,
           animation: "slideUp 0.3s ease-out",
         }}>
-          <div className="card" style={{ padding: "14px 16px", boxShadow: "0 8px 32px rgba(0,0,0,0.2)" }}>
+          <div className="card" style={{ padding: "14px 16px", boxShadow: "var(--shadow-premium)" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
               <div style={{
                 width: 46, height: 46, borderRadius: 14, flexShrink: 0,

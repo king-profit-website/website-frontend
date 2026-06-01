@@ -101,15 +101,15 @@
 }
 
 .dark {
-  --bg-primary:    #030706; /* Pitch emerald-black */
-  --bg-secondary:  #080E0D; /* Richer dark emerald card background */
-  --bg-card:       #080E0D;
-  --bg-card-alt:   #0D1615;
+  --bg-primary:    #0D1B18;
+  --bg-secondary:  #132520;
+  --bg-card:       #132520;
+  --bg-card-alt:   #1A3028;
   --text-primary:  #F9F5E8;
-  --text-secondary:#8FAEA0;
-  --text-muted:    #547768;
-  --border:        rgba(201, 168, 76, 0.12);
-  --bg-header-gradient: linear-gradient(135deg, #040908 0%, #0B1916 100%);
+  --text-secondary:#A8C4B8;
+  --text-muted:    #6B8E80;
+  --border:        rgba(201, 168, 76, 0.14);
+  --bg-header-gradient: linear-gradient(135deg, #102820 0%, #1A4A38 100%);
 }
 
 /* ── Reset & Base ────────────────────────────────────────────────────────────── */

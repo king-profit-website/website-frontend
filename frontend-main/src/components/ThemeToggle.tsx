@@ -2,36 +2,34 @@
 
 import { useEffect, useState } from "react";
 import { Sun, Moon } from "lucide-react";
+import { useAuthStore } from "@/lib/store";
 
 /**
  * ThemeToggle Component
  * A premium, animated button to switch between dark (default) and light themes.
- * Uses standard Tailwind class lists and localStorage persistence.
+ * Integrates perfectly with the global useAuthStore.
  */
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState<"light" | "dark">("dark");
+  const { theme, setTheme } = useAuthStore();
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const saved = localStorage.getItem("theme");
-    if (saved === "light") {
-      setTheme("light");
-      document.documentElement.classList.remove("dark");
-    } else {
-      setTheme("dark");
-      document.documentElement.classList.add("dark");
-    }
-  }, []);
+    setMounted(true);
+    // Sync document class with the store's state on mount
+    document.documentElement.classList.toggle("dark", theme === "dark");
+  }, [theme]);
+
+  if (!mounted) {
+    return (
+      <div 
+        className="w-[42px] h-[42px] rounded-xl border border-gold-500/20 bg-emerald-900/10 dark:bg-white/5" 
+        style={{ opacity: 0.5 }}
+      />
+    );
+  }
 
   const toggleTheme = () => {
-    if (theme === "dark") {
-      setTheme("light");
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    } else {
-      setTheme("dark");
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    }
+    setTheme(theme === "dark" ? "light" : "dark");
   };
 
   return (

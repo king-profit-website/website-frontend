@@ -41,7 +41,7 @@ export const useAuthStore = create<AuthState>()(
     (set, get) => ({
       user: null,
       isLoading: false,
-      theme: "light",
+      theme: "dark",
 
       setUser: (user) => set({ user }),
       setTheme: (theme) => {
