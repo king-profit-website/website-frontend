@@ -55,12 +55,16 @@ export default function HomePage() {
     setWheelLoading(true);
     try {
       const { data } = await api.post(`/wheel/spin?paid=${paid}`);
-      await fetchMe();
-      await fetchData();
       return { winning_index: data.winning_index, result_md: Number(data.result_md) };
     } finally {
       setWheelLoading(false);
     }
+  };
+
+  const handleSpinEnd = async () => {
+    try {
+      await Promise.all([fetchMe(), fetchData()]);
+    } catch {}
   };
 
   const level = user?.level || "Silver";
@@ -284,6 +288,7 @@ export default function HomePage() {
               {wheelStatus ? (
                 <WheelCanvas
                   onSpin={handleSpin}
+                  onSpinEnd={handleSpinEnd}
                   canSpinFree={wheelStatus.can_spin_free}
                   paidCost={wheelStatus.paid_spin_cost_md}
                   isLoading={wheelLoading}

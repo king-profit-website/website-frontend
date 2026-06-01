@@ -34,9 +34,11 @@ const PARTNERS_PREVIEW = [
 
 export default function LandingPage() {
   const [scrolled, setScrolled] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const { user, fetchMe } = useAuthStore();
 
   useEffect(() => {
+    setMounted(true);
     const handler = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handler);
     if (localStorage.getItem("access_token")) {
@@ -68,7 +70,9 @@ export default function LandingPage() {
           </div>
           <div className="flex items-center gap-3">
             <ThemeToggle />
-            {user ? (
+            {!mounted ? (
+              <div className="w-[110px] h-[38px] rounded-xl bg-transparent" />
+            ) : user ? (
               <Link href="/app/home" className="btn-gold text-sm px-5 py-2.5 flex items-center gap-2">
                 <span>Кабінет ({user.first_name})</span>
                 <ArrowRight size={15} />
@@ -119,8 +123,10 @@ export default function LandingPage() {
               PROFIT — єдина система токенів MD, яка об'єднує локальний бізнес і клієнтів. 
               Накопичуйте, витрачайте, вигравайте.
             </p>
-            <div className="flex flex-wrap gap-4">
-              {user ? (
+            <div className="flex flex-wrap gap-4 min-h-[48px]">
+              {!mounted ? (
+                <div className="w-[180px] h-[48px] rounded-xl bg-transparent" />
+              ) : user ? (
                 <Link href="/app/home" className="btn-gold flex items-center gap-2 text-base">
                   Перейти в кабінет <ArrowRight size={18} />
                 </Link>

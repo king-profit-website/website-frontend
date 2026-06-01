@@ -41,7 +41,7 @@ export default function Sidebar() {
     <aside className="app-sidebar" aria-label="Навігація">
       {/* Logo */}
       <div style={{ padding: "24px 20px 16px" }}>
-        <Link href="/app/home" style={{ display: "flex", alignItems: "center", gap: 12, textDecoration: "none" }}>
+        <Link href="/" style={{ display: "flex", alignItems: "center", gap: 12, textDecoration: "none" }}>
           <div style={{
             width: 44, height: 44,
             borderRadius: 14,

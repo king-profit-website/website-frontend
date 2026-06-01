@@ -16,12 +16,13 @@ const COLORS_LIGHT = [
 
 interface WheelCanvasProps {
   onSpin: (paid: boolean) => Promise<{ winning_index: number; result_md: number }>;
+  onSpinEnd?: () => void;
   canSpinFree: boolean;
   paidCost: number;
   isLoading: boolean;
 }
 
-export default function WheelCanvas({ onSpin, canSpinFree, paidCost, isLoading }: WheelCanvasProps) {
+export default function WheelCanvas({ onSpin, onSpinEnd, canSpinFree, paidCost, isLoading }: WheelCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rotationRef = useRef(0);
   const animRef = useRef<number>(0);
@@ -123,7 +124,7 @@ export default function WheelCanvas({ onSpin, canSpinFree, paidCost, isLoading }
   const spinTo = (targetIdx: number) => {
     const seg = (2 * Math.PI) / SEGMENTS.length;
     const totalRotations = 6 * 2 * Math.PI;
-    const targetAngle = -(targetIdx * seg + seg / 2 - Math.PI / 2);
+    const targetAngle = -(targetIdx * seg + seg / 2 + Math.PI / 2); // Adjusted for top 12 o'clock pointer
     const target = totalRotations + targetAngle - (rotationRef.current % (2 * Math.PI));
     const startAngle = rotationRef.current;
     const duration = 4000;
@@ -139,6 +140,9 @@ export default function WheelCanvas({ onSpin, canSpinFree, paidCost, isLoading }
         animRef.current = requestAnimationFrame(animate);
       } else {
         setSpinning(false);
+        if (onSpinEnd) {
+          onSpinEnd();
+        }
       }
     };
 

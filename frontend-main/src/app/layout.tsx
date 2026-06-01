@@ -46,7 +46,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Hydration-safe dark/light mode init */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='light'){document.documentElement.classList.remove('dark');}else{document.documentElement.classList.add('dark');}}catch(e){}})();`,
+            __html: `(function(){try{var p=localStorage.getItem('profit-auth');var t='dark';if(p){var s=JSON.parse(p);if(s&&s.state&&s.state.theme){t=s.state.theme;}}if(t==='light'){document.documentElement.classList.remove('dark');}else{document.documentElement.classList.add('dark');}}catch(e){}})();`,
           }}
         />
         {children}
