@@ -51,7 +51,7 @@ export default function MapPage() {
     }}>
       {/* Header overlay on map */}
       <div style={{
-        position: "absolute", top: 0, left: 0, right: 0, zIndex: 30,
+        position: "absolute", top: 0, left: 0, right: 0, zIndex: 1000,
         padding: "12px 16px",
         background: "linear-gradient(to bottom, var(--bg-secondary) 85%, transparent)",
         backdropFilter: "blur(8px)",
@@ -127,7 +127,7 @@ export default function MapPage() {
       {/* Selected partner bottom sheet */}
       {selected && (
         <div style={{
-          position: "absolute", bottom: isMobile ? 16 : 24, left: 16, right: 16, zIndex: 50,
+          position: "absolute", bottom: isMobile ? 16 : 24, left: 16, right: 16, zIndex: 1000,
           animation: "slideUp 0.3s ease-out",
         }}>
           <div className="card" style={{ padding: "14px 16px", boxShadow: "var(--shadow-premium)" }}>
