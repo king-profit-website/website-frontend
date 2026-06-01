@@ -78,20 +78,12 @@ export default function HomePage() {
 
       {/* ── Hero Header ────────────────────────────────────────────────────────── */}
       <div className="page-header" style={{ position: "relative", overflow: "hidden" }}>
-        {/* Decorative gold glows */}
+        {/* Decorative glow */}
         <div style={{
-          position: "absolute", top: -80, right: -80,
-          width: 240, height: 240,
-          background: "radial-gradient(circle, rgba(201,168,76,0.18) 0%, transparent 70%)",
-          borderRadius: "50%", pointerEvents: "none",
-          filter: "blur(20px)",
-        }} />
-        <div style={{
-          position: "absolute", bottom: -100, left: -60,
+          position: "absolute", top: -40, right: -40,
           width: 200, height: 200,
-          background: "radial-gradient(circle, rgba(201,168,76,0.1) 0%, transparent 70%)",
+          background: "rgba(201,168,76,0.08)",
           borderRadius: "50%", pointerEvents: "none",
-          filter: "blur(15px)",
         }} />
 
         <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 16 }}>

@@ -109,7 +109,7 @@
   --text-secondary:#A8C4B8;
   --text-muted:    #6B8E80;
   --border:        rgba(201, 168, 76, 0.14);
-  --bg-header-gradient: linear-gradient(135deg, #102820 0%, #1A4A38 100%);
+  --bg-header-gradient: var(--bg-secondary);
 }
 
 /* ── Reset & Base ────────────────────────────────────────────────────────────── */
@@ -125,7 +125,7 @@ html {
 }
 
 body {
-  background: radial-gradient(circle at top right, rgba(201, 168, 76, 0.04) 0%, var(--bg-primary) 70%);
+  background: var(--bg-primary);
   color: var(--text-primary);
   transition: background-color 0.3s, color 0.3s;
   min-height: 100dvh;
