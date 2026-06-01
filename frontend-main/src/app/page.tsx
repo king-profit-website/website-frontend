@@ -50,10 +50,10 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen font-sans overflow-x-hidden bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-300">
       {/* ── Navbar ─────────────────────────────────────────────────────────── */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      <nav className={`fixed top-0 left-0 right-0 z-50 navbar-transition border-b ${
         scrolled 
-          ? "bg-[var(--bg-secondary)]/90 backdrop-blur-xl border-b border-[var(--border)] shadow-lg" 
-          : "bg-transparent"
+          ? "bg-[var(--bg-secondary)]/90 backdrop-blur-xl border-[var(--border)] shadow-lg" 
+          : "bg-transparent border-transparent"
       }`}>
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">

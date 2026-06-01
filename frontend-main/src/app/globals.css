@@ -341,6 +341,10 @@ body {
   color: #F9F5E8;
 }
 
+.navbar-transition {
+  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
 /* ── Premium Header (mobile) ─────────────────────────────────────────────────── */
 .page-header {
   background: var(--bg-header-gradient);
