@@ -15,6 +15,7 @@ export default function MapPage() {
   const [selected, setSelected] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
+  const [showFilters, setShowFilters] = useState(true);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -58,7 +59,7 @@ export default function MapPage() {
         transition: "all 0.3s",
       }}>
         {/* Only visible on mobile where sidebar isn't shown */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: showFilters ? 10 : 0 }}>
           <div>
             <h1 style={{ fontFamily: "var(--font-display)", fontSize: "1.4rem", fontWeight: 700, color: "var(--text-primary)", lineHeight: 1 }}>
               Карта партнерів
@@ -69,20 +70,29 @@ export default function MapPage() {
             </p>
           </div>
           <button
+            onClick={() => setShowFilters(!showFilters)}
             aria-label="Фільтри"
             style={{
               width: 38, height: 38, borderRadius: 12,
-              background: "rgba(201,168,76,0.1)", border: "1px solid var(--border)",
+              background: showFilters ? "linear-gradient(135deg, #C9A84C, #E8C96C)" : "rgba(201,168,76,0.1)",
+              border: "1px solid var(--border)",
               display: "flex", alignItems: "center", justifyContent: "center",
-              cursor: "pointer", color: "#C9A84C",
+              cursor: "pointer", color: showFilters ? "#102820" : "#C9A84C",
+              transition: "all 0.25s ease-in-out",
             }}
           >
             <SlidersHorizontal size={17} />
           </button>
         </div>
 
-        {/* Category pills */}
-        <div style={{ display: "flex", gap: 8, overflowX: "auto" }} className="scrollbar-none">
+        {/* Category pills with collapsible max-height transition */}
+        <div style={{
+          display: "flex", gap: 8, overflowX: "auto",
+          transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
+          maxHeight: showFilters ? 50 : 0,
+          opacity: showFilters ? 1 : 0,
+          pointerEvents: showFilters ? "auto" : "none",
+        }} className="scrollbar-none">
           {CATEGORIES.map(cat => (
             <button
               key={cat}
