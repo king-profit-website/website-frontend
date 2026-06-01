@@ -95,19 +95,21 @@
   --text-secondary:#4A6B5C;
   --text-muted:    #8BA898;
   --border:        rgba(201, 168, 76, 0.22);
+  --bg-header-gradient: linear-gradient(135deg, #FDF8EC 0%, #F3EDD4 100%);
   --sidebar-w:     260px;
   --header-h:      64px;
 }
 
 .dark {
-  --bg-primary:    #0D1B18;
-  --bg-secondary:  #132520;
-  --bg-card:       #132520;
-  --bg-card-alt:   #1A3028;
+  --bg-primary:    #030706; /* Pitch emerald-black */
+  --bg-secondary:  #080E0D; /* Richer dark emerald card background */
+  --bg-card:       #080E0D;
+  --bg-card-alt:   #0D1615;
   --text-primary:  #F9F5E8;
-  --text-secondary:#A8C4B8;
-  --text-muted:    #6B8E80;
-  --border:        rgba(201, 168, 76, 0.14);
+  --text-secondary:#8FAEA0;
+  --text-muted:    #547768;
+  --border:        rgba(201, 168, 76, 0.12);
+  --bg-header-gradient: linear-gradient(135deg, #040908 0%, #0B1916 100%);
 }
 
 /* ── Reset & Base ────────────────────────────────────────────────────────────── */
@@ -123,7 +125,7 @@ html {
 }
 
 body {
-  background: var(--bg-primary);
+  background: radial-gradient(circle at top right, rgba(201, 168, 76, 0.04) 0%, var(--bg-primary) 70%);
   color: var(--text-primary);
   transition: background-color 0.3s, color 0.3s;
   min-height: 100dvh;
@@ -341,9 +343,10 @@ body {
 
 /* ── Premium Header (mobile) ─────────────────────────────────────────────────── */
 .page-header {
-  background: linear-gradient(135deg, #102820 0%, #1A4A38 100%);
-  border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+  background: var(--bg-header-gradient);
+  border-bottom: 1px solid var(--border);
   padding: 56px 20px 20px;
+  transition: background 0.3s, border-color 0.3s;
 }
 
 @media (min-width: 768px) {

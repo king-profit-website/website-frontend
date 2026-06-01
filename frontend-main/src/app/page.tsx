@@ -7,6 +7,7 @@ import {
   Zap, Award, ChevronRight, CheckCircle
 } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
+import { useAuthStore } from "@/lib/store";
 
 const FEATURES = [
   { icon: Coins, title: "Токени MD", desc: "Єдина валюта для всіх партнерів екосистеми" },
@@ -33,53 +34,68 @@ const PARTNERS_PREVIEW = [
 
 export default function LandingPage() {
   const [scrolled, setScrolled] = useState(false);
+  const { user, fetchMe } = useAuthStore();
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handler);
+    if (localStorage.getItem("access_token")) {
+      fetchMe();
+    }
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
   return (
-    <div className="min-h-screen font-sans overflow-x-hidden">
+    <div className="min-h-screen font-sans overflow-x-hidden bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-300">
       {/* ── Navbar ─────────────────────────────────────────────────────────── */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-emerald-900/95 backdrop-blur-xl shadow-lg" : "bg-transparent"
+        scrolled 
+          ? "bg-[var(--bg-secondary)]/90 backdrop-blur-xl border-b border-[var(--border)] shadow-lg" 
+          : "bg-transparent"
       }`}>
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-emerald-900 border border-gold-500/30 flex items-center justify-center">
-              <span className="text-gold-400 font-display font-bold text-lg">P</span>
+            <div className="w-10 h-10 rounded-2xl bg-[var(--bg-card)] border border-gold-500/30 flex items-center justify-center shadow-md">
+              <span className="text-gold-500 font-display font-bold text-lg">P</span>
             </div>
-            <span className="text-white font-display font-semibold text-xl">PROFIT</span>
+            <span className="text-[var(--text-primary)] font-display font-semibold text-xl">PROFIT</span>
           </div>
-          <div className="hidden md:flex items-center gap-8 text-white/70 text-sm">
-            <a href="#features" className="hover:text-gold-400 transition-colors">Можливості</a>
-            <a href="#levels" className="hover:text-gold-400 transition-colors">Рівні</a>
-            <a href="#partners" className="hover:text-gold-400 transition-colors">Партнери</a>
-            <a href="#business" className="hover:text-gold-400 transition-colors">Для бізнесу</a>
+          <div className="hidden md:flex items-center gap-8 text-[var(--text-secondary)] text-sm">
+            <a href="#features" className="hover:text-gold-500 transition-colors">Можливості</a>
+            <a href="#levels" className="hover:text-gold-500 transition-colors">Рівні</a>
+            <a href="#partners" className="hover:text-gold-500 transition-colors">Партнери</a>
+            <a href="#business" className="hover:text-gold-500 transition-colors">Для бізнесу</a>
           </div>
           <div className="flex items-center gap-3">
             <ThemeToggle />
-            <Link href="/auth" className="text-white/70 hover:text-white text-sm transition-colors px-4 py-2">
-              Увійти
-            </Link>
-            <Link href="/auth?tab=register" className="btn-gold text-sm px-5 py-2.5">
-              Розпочати
-            </Link>
+            {user ? (
+              <Link href="/app/home" className="btn-gold text-sm px-5 py-2.5 flex items-center gap-2">
+                <span>Кабінет ({user.first_name})</span>
+                <ArrowRight size={15} />
+              </Link>
+            ) : (
+              <>
+                <Link href="/auth" className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] text-sm transition-colors px-4 py-2">
+                  Увійти
+                </Link>
+                <Link href="/auth?tab=register" className="btn-gold text-sm px-5 py-2.5">
+                  Розпочати
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </nav>
 
       {/* ── Hero ────────────────────────────────────────────────────────────── */}
-      <section className="relative min-h-screen bg-emerald-gradient flex items-center overflow-hidden">
+      <section className="relative min-h-screen bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-card-alt)] flex items-center overflow-hidden transition-colors duration-300">
         {/* Background decoration */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-gold-500/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-1/4 left-1/4 w-64 h-64 bg-emerald-500/20 rounded-full blur-3xl" />
+          <div className="absolute bottom-1/4 left-1/4 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl" />
           {/* Grid pattern */}
           <div className="absolute inset-0" style={{
-            backgroundImage: "linear-gradient(rgba(201,168,76,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.05) 1px, transparent 1px)",
+            backgroundImage: "linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px)",
             backgroundSize: "60px 60px"
           }} />
         </div>
@@ -88,9 +104,9 @@ export default function LandingPage() {
           <div className="animate-fade-in">
             <div className="inline-flex items-center gap-2 bg-gold-500/10 border border-gold-500/30 rounded-full px-4 py-1.5 mb-6">
               <div className="w-2 h-2 rounded-full bg-gold-400 animate-pulse" />
-              <span className="text-gold-400 text-sm font-medium">Екосистема лояльності нового покоління</span>
+              <span className="text-gold-500 text-sm font-medium">Екосистема лояльності нового покоління</span>
             </div>
-            <h1 className="font-display text-5xl lg:text-7xl font-bold text-white leading-tight mb-6">
+            <h1 className="font-display text-5xl lg:text-7xl font-bold text-[var(--text-primary)] leading-tight mb-6">
               Один бонус.
               <br />
               <span className="text-gold-gradient">
@@ -99,23 +115,31 @@ export default function LandingPage() {
               <br />
               можливостей.
             </h1>
-            <p className="text-white/70 text-lg mb-8 max-w-lg leading-relaxed">
+            <p className="text-[var(--text-secondary)] text-lg mb-8 max-w-lg leading-relaxed">
               PROFIT — єдина система токенів MD, яка об'єднує локальний бізнес і клієнтів. 
               Накопичуйте, витрачайте, вигравайте.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Link href="/auth?tab=register" className="btn-gold flex items-center gap-2 text-base">
-                Зареєструватись <ArrowRight size={18} />
-              </Link>
-              <a href="#features" className="btn-emerald flex items-center gap-2 text-base">
-                Дізнатись більше
-              </a>
+              {user ? (
+                <Link href="/app/home" className="btn-gold flex items-center gap-2 text-base">
+                  Перейти в кабінет <ArrowRight size={18} />
+                </Link>
+              ) : (
+                <>
+                  <Link href="/auth?tab=register" className="btn-gold flex items-center gap-2 text-base">
+                    Зареєструватись <ArrowRight size={18} />
+                  </Link>
+                  <a href="#features" className="btn-emerald flex items-center gap-2 text-base">
+                    Дізнатись більше
+                  </a>
+                </>
+              )}
             </div>
             <div className="mt-10 flex items-center gap-8">
               {[["1000+", "Клієнтів"], ["50+", "Партнерів"], ["500K+", "MD видано"]].map(([val, label]) => (
                 <div key={label}>
-                  <p className="font-display text-2xl font-bold text-gold-400">{val}</p>
-                  <p className="text-white/50 text-sm">{label}</p>
+                  <p className="font-display text-2xl font-bold text-gold-500">{val}</p>
+                  <p className="text-[var(--text-secondary)] text-sm">{label}</p>
                 </div>
               ))}
             </div>
@@ -156,13 +180,13 @@ export default function LandingPage() {
       </section>
 
       {/* ── Features ────────────────────────────────────────────────────────── */}
-      <section id="features" className="py-24 bg-cream-100 dark:bg-dark-bg">
+      <section id="features" className="py-24 bg-[var(--bg-secondary)] border-y border-[var(--border)] transition-colors duration-300">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="font-display text-4xl font-bold text-emerald-900 dark:text-cream-100 mb-4">
+            <h2 className="font-display text-4xl font-bold text-[var(--text-primary)] mb-4">
               Всі можливості в одному додатку
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 max-w-xl mx-auto">
+            <p className="text-[var(--text-secondary)] max-w-xl mx-auto">
               Геймифікована система лояльності з картою партнерів, колесом удачі та персональними квестами
             </p>
           </div>
@@ -172,8 +196,8 @@ export default function LandingPage() {
                 <div className="w-12 h-12 rounded-2xl bg-gold-500/10 flex items-center justify-center mb-4 group-hover:bg-gold-500/20 transition-colors">
                   <Icon className="text-gold-500" size={24} />
                 </div>
-                <h3 className="font-semibold text-emerald-900 dark:text-cream-100 mb-2">{title}</h3>
-                <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">{desc}</p>
+                <h3 className="font-semibold text-[var(--text-primary)] mb-2">{title}</h3>
+                <p className="text-[var(--text-secondary)] text-sm leading-relaxed">{desc}</p>
               </div>
             ))}
           </div>
@@ -181,24 +205,24 @@ export default function LandingPage() {
       </section>
 
       {/* ── Levels ──────────────────────────────────────────────────────────── */}
-      <section id="levels" className="py-24 bg-emerald-gradient">
+      <section id="levels" className="py-24 bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-card-alt)] transition-colors duration-300">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="font-display text-4xl font-bold text-white mb-4">Рівні та привілеї</h2>
-            <p className="text-white/60">Підвищуйте свій рівень та отримуйте більше переваг</p>
+            <h2 className="font-display text-4xl font-bold text-[var(--text-primary)] mb-4">Рівні та привілеї</h2>
+            <p className="text-[var(--text-secondary)]">Підвищуйте свій рівень та отримуйте більше переваг</p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {LEVELS.map(({ name, xp, color, perks }) => (
-              <div key={name} className="bg-white/5 border border-gold-500/20 rounded-2xl p-6 hover:border-gold-500/40 transition-all">
+              <div key={name} className="bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl p-6 hover:border-gold-500/40 shadow-sm transition-all">
                 <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${color} flex items-center justify-center mb-4 shadow-gold`}>
-                  <Award className="text-white" size={28} />
+                  <Award className="text-[#102820]" size={28} />
                 </div>
-                <h3 className="font-display text-2xl font-bold text-white mb-1">{name}</h3>
-                <p className="text-gold-400 text-sm mb-4">{xp}</p>
+                <h3 className="font-display text-2xl font-bold text-[var(--text-primary)] mb-1">{name}</h3>
+                <p className="text-gold-500 text-sm mb-4">{xp}</p>
                 <ul className="space-y-2">
                   {perks.map((perk) => (
-                    <li key={perk} className="flex items-center gap-2 text-white/70 text-sm">
-                      <CheckCircle size={14} className="text-gold-400 flex-shrink-0" />
+                    <li key={perk} className="flex items-center gap-2 text-[var(--text-secondary)] text-sm">
+                      <CheckCircle size={14} className="text-gold-500 flex-shrink-0" />
                       {perk}
                     </li>
                   ))}
@@ -210,14 +234,14 @@ export default function LandingPage() {
       </section>
 
       {/* ── Partners preview ────────────────────────────────────────────────── */}
-      <section id="partners" className="py-24 bg-cream-100 dark:bg-dark-bg">
+      <section id="partners" className="py-24 bg-[var(--bg-secondary)] border-b border-[var(--border)] transition-colors duration-300">
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex items-center justify-between mb-12">
             <div>
-              <h2 className="font-display text-4xl font-bold text-emerald-900 dark:text-cream-100 mb-2">
+              <h2 className="font-display text-4xl font-bold text-[var(--text-primary)] mb-2">
                 Партнери PROFIT
               </h2>
-              <p className="text-gray-500 dark:text-gray-400">Заклади, де ваші MD мають цінність</p>
+              <p className="text-[var(--text-secondary)]">Заклади, де ваші MD мають цінність</p>
             </div>
             <Link href="/auth" className="btn-gold flex items-center gap-2 text-sm">
               Всі партнери <ChevronRight size={16} />
@@ -226,11 +250,11 @@ export default function LandingPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             {PARTNERS_PREVIEW.map(({ name, category, bonus }) => (
               <div key={name} className="card card-hover p-5">
-                <div className="w-12 h-12 rounded-xl card-emerald flex items-center justify-center mb-4">
-                  <span className="text-gold-400 font-display font-bold text-lg">{name[0]}</span>
+                <div className="w-12 h-12 rounded-xl bg-gold-500/10 flex items-center justify-center mb-4">
+                  <span className="text-gold-500 font-display font-bold text-lg">{name[0]}</span>
                 </div>
-                <h3 className="font-semibold text-emerald-900 dark:text-cream-100">{name}</h3>
-                <p className="text-gray-500 dark:text-gray-400 text-sm">{category}</p>
+                <h3 className="font-semibold text-[var(--text-primary)]">{name}</h3>
+                <p className="text-[var(--text-secondary)] text-sm">{category}</p>
                 <div className="mt-3 md-badge">{bonus} MD back</div>
               </div>
             ))}
@@ -239,17 +263,17 @@ export default function LandingPage() {
       </section>
 
       {/* ── For Business ────────────────────────────────────────────────────── */}
-      <section id="business" className="py-24 bg-dark-bg">
+      <section id="business" className="py-24 bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-card-alt)] transition-colors duration-300">
         <div className="max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <div className="inline-flex items-center gap-2 bg-gold-500/10 border border-gold-500/30 rounded-full px-4 py-1.5 mb-6">
-              <Shield size={14} className="text-gold-400" />
-              <span className="text-gold-400 text-sm">Для бізнесу</span>
+              <Shield size={14} className="text-gold-500" />
+              <span className="text-gold-500 text-sm">Для бізнесу</span>
             </div>
-            <h2 className="font-display text-4xl font-bold text-white mb-6">
+            <h2 className="font-display text-4xl font-bold text-[var(--text-primary)] mb-6">
               Розвивайте свій бізнес разом з PROFIT
             </h2>
-            <p className="text-white/60 mb-8 leading-relaxed">
+            <p className="text-[var(--text-secondary)] mb-8 leading-relaxed">
               Підключіться до екосистеми та отримайте готову базу лояльних клієнтів. 
               Управляйте акціями, нараховуйте бонуси та відстежуйте статистику через зручний B2B-дашборд.
             </p>
@@ -260,8 +284,8 @@ export default function LandingPage() {
                 "Управління акціями та знижками",
                 "Аналітика транзакцій клієнтів",
               ].map((item) => (
-                <li key={item} className="flex items-center gap-3 text-white/80">
-                  <CheckCircle size={18} className="text-gold-400 flex-shrink-0" />
+                <li key={item} className="flex items-center gap-3 text-[var(--text-secondary)]">
+                  <CheckCircle size={18} className="text-gold-500 flex-shrink-0" />
                   {item}
                 </li>
               ))}
@@ -277,9 +301,9 @@ export default function LandingPage() {
               { label: "Повторні візити", value: "+41%" },
               { label: "NPS партнерів", value: "4.8/5" },
             ].map(({ label, value }) => (
-              <div key={label} className="bg-white/5 border border-gold-500/20 rounded-2xl p-6">
-                <p className="font-display text-3xl font-bold text-gold-400 mb-1">{value}</p>
-                <p className="text-white/50 text-sm">{label}</p>
+              <div key={label} className="bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl p-6 shadow-sm">
+                <p className="font-display text-3xl font-bold text-gold-500 mb-1">{value}</p>
+                <p className="text-[var(--text-secondary)] text-sm">{label}</p>
               </div>
             ))}
           </div>
@@ -287,12 +311,12 @@ export default function LandingPage() {
       </section>
 
       {/* ── CTA ─────────────────────────────────────────────────────────────── */}
-      <section className="py-24 bg-emerald-gradient text-center">
+      <section className="py-24 bg-[var(--bg-secondary)] border-y border-[var(--border)] text-center transition-colors duration-300">
         <div className="max-w-2xl mx-auto px-6">
-          <h2 className="font-display text-5xl font-bold text-white mb-6">
+          <h2 className="font-display text-5xl font-bold text-[var(--text-primary)] mb-6">
             Готові розпочати?
           </h2>
-          <p className="text-white/60 text-lg mb-8">
+          <p className="text-[var(--text-secondary)] text-lg mb-8">
             Приєднуйтесь до тисяч клієнтів, які вже накопичують MD токени
           </p>
           <Link href="/auth?tab=register" className="btn-gold text-lg px-8 py-4 inline-flex items-center gap-2">
@@ -302,18 +326,18 @@ export default function LandingPage() {
       </section>
 
       {/* ── Footer ──────────────────────────────────────────────────────────── */}
-      <footer className="bg-dark-bg border-t border-gold-500/10 py-12">
+      <footer className="bg-[var(--bg-secondary)] border-t border-[var(--border)] py-12 transition-colors duration-300">
         <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl bg-emerald-900 border border-gold-500/30 flex items-center justify-center">
-              <span className="text-gold-400 font-display font-bold">P</span>
+            <div className="w-8 h-8 rounded-xl bg-[var(--bg-card)] border border-gold-500/30 flex items-center justify-center shadow-sm">
+              <span className="text-gold-500 font-display font-bold">P</span>
             </div>
-            <span className="text-white font-display font-semibold">PROFIT</span>
+            <span className="text-[var(--text-primary)] font-display font-semibold">PROFIT</span>
           </div>
-          <p className="text-white/30 text-sm">Один бонус. Багато можливостей. © 2026</p>
-          <div className="flex gap-6 text-white/40 text-sm">
-            <a href="#" className="hover:text-gold-400 transition-colors">Умови</a>
-            <a href="#" className="hover:text-gold-400 transition-colors">Конфіденційність</a>
+          <p className="text-[var(--text-secondary)] opacity-70 text-sm">Один бонус. Багато можливостей. © 2026</p>
+          <div className="flex gap-6 text-[var(--text-secondary)] text-sm">
+            <a href="#" className="hover:text-gold-500 transition-colors">Умови</a>
+            <a href="#" className="hover:text-gold-500 transition-colors">Конфіденційність</a>
             <a href="#" className="hover:text-gold-400 transition-colors">Контакти</a>
           </div>
         </div>

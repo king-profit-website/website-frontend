@@ -74,12 +74,20 @@ export default function HomePage() {
 
       {/* ── Hero Header ────────────────────────────────────────────────────────── */}
       <div className="page-header" style={{ position: "relative", overflow: "hidden" }}>
-        {/* Decorative glow */}
+        {/* Decorative gold glows */}
         <div style={{
-          position: "absolute", top: -40, right: -40,
-          width: 200, height: 200,
-          background: "rgba(201,168,76,0.08)",
+          position: "absolute", top: -80, right: -80,
+          width: 240, height: 240,
+          background: "radial-gradient(circle, rgba(201,168,76,0.18) 0%, transparent 70%)",
           borderRadius: "50%", pointerEvents: "none",
+          filter: "blur(20px)",
+        }} />
+        <div style={{
+          position: "absolute", bottom: -100, left: -60,
+          width: 200, height: 200,
+          background: "radial-gradient(circle, rgba(201,168,76,0.1) 0%, transparent 70%)",
+          borderRadius: "50%", pointerEvents: "none",
+          filter: "blur(15px)",
         }} />
 
         <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 16 }}>
@@ -96,8 +104,8 @@ export default function HomePage() {
               </span>
             </div>
             <div>
-              <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 12, marginBottom: 2 }}>Вітаємо,</p>
-              <p style={{ color: "#F9F5E8", fontWeight: 600, fontSize: 16 }}>
+              <p style={{ color: "var(--text-secondary)", fontSize: 12, marginBottom: 2, transition: "color 0.3s" }}>Вітаємо,</p>
+              <p style={{ color: "var(--text-primary)", fontWeight: 600, fontSize: 16, transition: "color 0.3s" }}>
                 {user?.first_name} {user?.last_name}
               </p>
               <span className={`level-badge ${LEVEL_COLORS[level]}`} style={{ marginTop: 4, display: "inline-flex" }}>
@@ -111,23 +119,25 @@ export default function HomePage() {
             <button
               aria-label="Сповіщення"
               style={{
-                width: 40, height: 40, borderRadius: 12, background: "rgba(255,255,255,0.06)",
-                border: "1px solid rgba(255,255,255,0.1)", display: "flex", alignItems: "center",
-                justifyContent: "center", cursor: "pointer", position: "relative", color: "rgba(255,255,255,0.7)",
+                width: 40, height: 40, borderRadius: 12, background: "rgba(201,168,76,0.08)",
+                border: "1px solid var(--border)", display: "flex", alignItems: "center",
+                justifyContent: "center", cursor: "pointer", position: "relative", color: "var(--text-primary)",
+                transition: "all 0.3s",
               }}
             >
               <Bell size={18} strokeWidth={1.8} />
               <span style={{
                 position: "absolute", top: 8, right: 8, width: 7, height: 7,
-                background: "#C9A84C", borderRadius: "50%", border: "1.5px solid #1A4A38",
+                background: "#C9A84C", borderRadius: "50%", border: "1.5px solid var(--bg-card)",
               }} />
             </button>
             <button
               aria-label="Звіти"
               style={{
-                width: 40, height: 40, borderRadius: 12, background: "rgba(255,255,255,0.06)",
-                border: "1px solid rgba(255,255,255,0.1)", display: "flex", alignItems: "center",
-                justifyContent: "center", cursor: "pointer", color: "rgba(255,255,255,0.7)",
+                width: 40, height: 40, borderRadius: 12, background: "rgba(201,168,76,0.08)",
+                border: "1px solid var(--border)", display: "flex", alignItems: "center",
+                justifyContent: "center", cursor: "pointer", color: "var(--text-primary)",
+                transition: "all 0.3s",
               }}
             >
               <FileText size={18} strokeWidth={1.8} />
@@ -137,10 +147,10 @@ export default function HomePage() {
 
         {/* Balance */}
         <div style={{ textAlign: "center", padding: "24px 0 16px" }}>
-          <p style={{ color: "rgba(255,255,255,0.45)", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 8 }}>
+          <p style={{ color: "var(--text-secondary)", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 8, transition: "color 0.3s" }}>
             Ваш баланс
           </p>
-          <p className="balance-value" style={{ fontSize: "clamp(2.5rem, 8vw, 3.5rem)" }}>
+          <p className="balance-value" style={{ fontSize: "clamp(2.5rem, 8vw, 3.5rem)", color: "var(--text-primary)", transition: "color 0.3s" }}>
             {Number(user?.md_balance || 0).toLocaleString("uk-UA")}
           </p>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6, marginTop: 6 }}>
@@ -160,12 +170,12 @@ export default function HomePage() {
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
               <Star size={14} color="#C9A84C" />
-              <span style={{ color: "rgba(255,255,255,0.6)", fontSize: 12 }}>
+              <span style={{ color: "var(--text-secondary)", fontSize: 12, transition: "color 0.3s" }}>
                 {xp} XP
               </span>
             </div>
             {nextLevel && (
-              <span style={{ color: "rgba(255,255,255,0.35)", fontSize: 11 }}>
+              <span style={{ color: "var(--text-muted)", fontSize: 11, transition: "color 0.3s" }}>
                 {LEVEL_XP[nextLevel][0] - xp} XP до {nextLevel}
               </span>
             )}
