@@ -166,13 +166,14 @@ function AuthForm() {
   return (
     <div style={{
       minHeight: "100dvh",
-      background: "linear-gradient(135deg, #0A1F1C 0%, #102820 50%, #1A3A2F 100%)",
+      background: "linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-card-alt) 100%)",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
       padding: 20,
       position: "relative",
       overflow: "hidden",
+      transition: "background 0.3s, color 0.3s",
     }}>
       {/* Floating Theme Toggle (Premium Sun/Moon Switcher) */}
       <div style={{ position: "absolute", top: 20, right: 20, zIndex: 50 }}>
@@ -180,8 +181,8 @@ function AuthForm() {
       </div>
 
       {/* Background blobs */}
-      <div style={{ position: "absolute", top: "10%", right: "15%", width: 300, height: 300, background: "rgba(201,168,76,0.05)", borderRadius: "50%", filter: "blur(60px)", pointerEvents: "none" }} />
-      <div style={{ position: "absolute", bottom: "15%", left: "10%", width: 200, height: 200, background: "rgba(26,74,56,0.15)", borderRadius: "50%", filter: "blur(40px)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", top: "10%", right: "15%", width: 300, height: 300, background: "rgba(201,168,76,0.03)", borderRadius: "50%", filter: "blur(60px)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", bottom: "15%", left: "10%", width: 200, height: 200, background: "rgba(26,74,56,0.08)", borderRadius: "50%", filter: "blur(40px)", pointerEvents: "none" }} />
 
       {/* Desktop: side-by-side layout */}
       <div style={{
@@ -191,6 +192,7 @@ function AuthForm() {
         width: "100%",
         gap: 40,
         alignItems: "center",
+        zIndex: 10,
       }}>
 
         {/* Left: Branding */}
@@ -206,10 +208,10 @@ function AuthForm() {
               <span style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 40, color: "#102820" }}>P</span>
             </div>
           </Link>
-          <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 700, color: "#F9F5E8", lineHeight: 1.1, marginBottom: 12 }}>
+          <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 700, color: "var(--text-primary)", lineHeight: 1.1, marginBottom: 12, transition: "color 0.3s" }}>
             PROFIT
           </h1>
-          <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 16, maxWidth: 300, margin: "0 auto 32px", lineHeight: 1.5 }}>
+          <p style={{ color: "var(--text-secondary)", fontSize: 16, maxWidth: 300, margin: "0 auto 32px", lineHeight: 1.5, opacity: 0.85, transition: "color 0.3s" }}>
             Один бонус. Багато можливостей.
           </p>
 
@@ -223,7 +225,7 @@ function AuthForm() {
             ].map(item => (
               <div key={item} style={{ display: "flex", alignItems: "center", gap: 10 }}>
                 <CheckCircle size={16} color="#10B981" />
-                <span style={{ color: "rgba(255,255,255,0.65)", fontSize: 14 }}>{item}</span>
+                <span style={{ color: "var(--text-secondary)", fontSize: 14, opacity: 0.9, transition: "color 0.3s" }}>{item}</span>
               </div>
             ))}
           </div>
@@ -231,16 +233,18 @@ function AuthForm() {
 
         {/* Right: Form card */}
         <div style={{
-          background: "rgba(255,255,255,0.05)",
+          background: "var(--bg-card)",
           backdropFilter: "blur(20px)",
-          border: "1px solid rgba(201,168,76,0.18)",
+          border: "1px solid var(--border)",
           borderRadius: 28,
           padding: "32px 28px",
+          boxShadow: "0 10px 40px rgba(0,0,0,0.06)",
           animation: "slideUp 0.4s cubic-bezier(0.4,0,0.2,1)",
+          transition: "background-color 0.3s, border-color 0.3s",
         }}>
           {/* Tabs */}
           <div style={{
-            display: "flex", gap: 4, background: "rgba(0,0,0,0.2)",
+            display: "flex", gap: 4, background: "rgba(201,168,76,0.08)",
             borderRadius: 16, padding: 4, marginBottom: 24,
           }}>
             {(["login", "register"] as const).map(t => (
@@ -254,7 +258,7 @@ function AuthForm() {
                   background: tab === t
                     ? "linear-gradient(135deg, #C9A84C, #E8C96C)"
                     : "transparent",
-                  color: tab === t ? "#102820" : "rgba(255,255,255,0.45)",
+                  color: tab === t ? "#102820" : "var(--text-secondary)",
                   boxShadow: tab === t ? "0 3px 12px rgba(201,168,76,0.35)" : "none",
                 }}
               >
@@ -285,7 +289,7 @@ function AuthForm() {
                 placeholder="••••••••" label="Пароль"
                 value={lf.password} onChange={v => setLf(p => ({ ...p, password: v }))}
                 right={
-                  <button type="button" onClick={() => setShowPass(!showPass)} style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.35)", display: "flex" }}>
+                  <button type="button" onClick={() => setShowPass(!showPass)} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--text-secondary)", opacity: 0.6, display: "flex" }}>
                     {showPass ? <EyeOff size={16} /> : <Eye size={16} />}
                   </button>
                 }
@@ -311,7 +315,7 @@ function AuthForm() {
                 placeholder="Мін. 8 символів" label="Пароль"
                 value={rf.password} onChange={v => setRf(p => ({ ...p, password: v }))}
                 right={
-                  <button type="button" onClick={() => setShowPass(!showPass)} style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.35)", display: "flex" }}>
+                  <button type="button" onClick={() => setShowPass(!showPass)} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--text-secondary)", opacity: 0.6, display: "flex" }}>
                     {showPass ? <EyeOff size={15} /> : <Eye size={15} />}
                   </button>
                 }
@@ -320,7 +324,7 @@ function AuthForm() {
               <button type="submit" disabled={isLoading} className="btn-gold" style={{ width: "100%", marginTop: 6, padding: "13px 24px" }}>
                 {isLoading ? <Spinner /> : <><span>Зареєструватись</span><ArrowRight size={17} /></>}
               </button>
-              <p style={{ textAlign: "center", fontSize: 11, color: "rgba(255,255,255,0.25)", marginTop: 4 }}>
+              <p style={{ textAlign: "center", fontSize: 11, color: "var(--text-secondary)", opacity: 0.7, marginTop: 4 }}>
                 Реєструючись, ви погоджуєтесь з умовами використання
               </p>
             </form>
@@ -329,7 +333,7 @@ function AuthForm() {
       </div>
 
       {/* Back link */}
-      <Link href="/" style={{ position: "absolute", bottom: 20, left: "50%", transform: "translateX(-50%)", color: "rgba(255,255,255,0.3)", fontSize: 13, textDecoration: "none" }}>
+      <Link href="/" style={{ position: "absolute", bottom: 20, left: "50%", transform: "translateX(-50%)", color: "var(--text-secondary)", opacity: 0.7, fontSize: 13, textDecoration: "none", transition: "color 0.3s" }}>
         ← Повернутись на головну
       </Link>
     </div>
@@ -344,11 +348,11 @@ function AuthInput({
 }) {
   return (
     <div style={{ width: "100%" }}>
-      <label style={{ display: "block", fontSize: 11, color: "rgba(255,255,255,0.4)", marginBottom: 6 }}>{label}</label>
+      <label style={{ display: "block", fontSize: 11, color: "var(--text-secondary)", opacity: 0.8, marginBottom: 6, transition: "color 0.3s" }}>{label}</label>
       <div style={{
         display: "flex", alignItems: "center",
-        background: "rgba(255,255,255,0.05)", border: "1px solid rgba(201,168,76,0.18)",
-        borderRadius: 14, transition: "border-color 0.18s",
+        background: "var(--bg-secondary)", border: "1px solid var(--border)",
+        borderRadius: 14, transition: "border-color 0.18s, background-color 0.3s",
         width: "100%",
       }}>
         <span style={{ paddingLeft: 14, color: "rgba(201,168,76,0.6)", display: "flex", flexShrink: 0 }}>{icon}</span>
@@ -357,10 +361,11 @@ function AuthInput({
           onChange={e => onChange(e.target.value)} required
           style={{
             flex: 1, background: "none", border: "none", outline: "none",
-            padding: "11px 12px", color: "#F9F5E8", fontSize: 14,
+            padding: "11px 12px", color: "var(--text-primary)", fontSize: 14,
             fontFamily: "var(--font-sans)",
             width: "100%",
             minWidth: 0,
+            transition: "color 0.3s",
           }}
         />
         {right && <span style={{ paddingRight: 12, display: "flex", flexShrink: 0 }}>{right}</span>}
